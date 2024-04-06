@@ -1,0 +1,76 @@
+<!-- result.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emotion Detection Result</title>
+    <link rel="stylesheet" href="static/style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://www.notgoodenoughstuff.com/wp-content/uploads/2022/02/Emotional-Validation.webp');
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 16px;
+            box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        h1, h2 {
+            color: #333333;
+            margin-bottom: 30px;
+        }
+
+        form {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 28px;
+            border: none;
+            border-radius: 40px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Emotion Detection Result</h1>
+        <div class="result-image">
+            <img src="{{ result_image }}" alt="Result Image">
+        </div>
+        <a href="/">Go Back</a>
+    </div>
+</body>
+</html>

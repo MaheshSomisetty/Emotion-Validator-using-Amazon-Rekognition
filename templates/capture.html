@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capture from Camera</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://www.notgoodenoughstuff.com/wp-content/uploads/2022/02/Emotional-Validation.webp');
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 16px;
+            box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        h1, h2 {
+            color: #333333;
+            margin-bottom: 30px;
+        }
+
+        form {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 28px;
+            border: none;
+            border-radius: 40px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+    <h1 align = 'center'>Capture from Camera</h1>
+    <video id="video" width="640" height="480" autoplay></video>
+    <button id="snap">Snap Photo</button>
+    <canvas id="canvas" width="640" height="480"></canvas>
+    <a href="/" style="display: block; text-align: center; margin-top: 20px;">Go Back</a>
+    <script>
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const snapButton = document.getElementById('snap');
+
+        // Get access to the camera
+        async function initCamera() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                video.srcObject = stream;
+            } catch (err) {
+                console.error('Error accessing camera:', err);
+            }
+        }
+
+        // Draw image from camera on canvas
+        function drawImage() {
+            const context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        }
+
+        // Capture photo from camera
+        snapButton.addEventListener('click', () => {
+            drawImage();
+            // Convert canvas content to base64 data URL
+            const imageData = canvas.toDataURL('image/jpeg');
+            // Send image data to server for processing
+            fetch('/process_image', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ image: imageData })
+            })
+            .then(response => response.text())
+            .then(resultImagePath => {
+                // Redirect to result page
+                window.location.href = '/result?image_path=' + resultImagePath;
+            })
+            .catch(error => {
+                console.error('Error processing image:', error);
+            });
+        });
+
+        // Initialize camera when the page is loaded
+        window.onload = () => {
+            initCamera();
+        };
+    </script>
+    </div>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Image</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://www.notgoodenoughstuff.com/wp-content/uploads/2022/02/Emotional-Validation.webp');
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 16px;
+            box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        h1, h2 {
+            color: #333333;
+            margin-bottom: 30px;
+        }
+
+        form {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 28px;
+            border: none;
+            border-radius: 40px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body, align = 'center'>
+    <h1>Upload Image</h1>
+    <div class="container">
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" accept="image/*" onchange="previewImage(event)">
+            <button type="submit">Upload</button>
+        </form>
+        <div id="imagePreview" style="display: none;">
+            <h2>Selected Image:</h2>
+            <img id="preview" src="#" alt="Selected Image" style="max-width: 100%; max-height: 400px;">
+        </div>
+        <a href="/">Go Back</a> <!-- This is the back button -->
+    </div>
+
+    <script>
+        function previewImage(event) {
+            var preview = document.getElementById('preview');
+            var imagePreview = document.getElementById('imagePreview');
+            preview.src = URL.createObjectURL(event.target.files[0]);
+            imagePreview.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
